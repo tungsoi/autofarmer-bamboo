@@ -11,7 +11,7 @@ return [
     | login page.
     |
     */
-    'name' => 'Twhite-admin',
+    'name' => 'AutoFarmer',
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<b>Twhite</b> admin',
+    'logo' => '<b>Auto</b> Farmer',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ return [
     | '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo-mini' => '<b>TW</b>',
+    'logo-mini' => '<b>AF</b>',
 
     /*
     |--------------------------------------------------------------------------
