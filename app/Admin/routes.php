@@ -2,6 +2,10 @@
 
 use Illuminate\Routing\Router;
 
+Route::get('/', function () {
+    return redirect()->route('admin.home');
+});
+
 Admin::routes();
 
 Route::group([
@@ -12,5 +16,9 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index')->name('home');
+
+    $router->resources([
+        'buy_histories'   =>  'BuyHistoryController'
+    ]);
 
 });

@@ -7,14 +7,15 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     @if(!is_null($favicon = Admin::favicon()))
-    <link rel="shortcut icon" href="{{$favicon}}">
+        <link rel="shortcut icon" href="{{$favicon}}">
     @endif
 
     <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
     <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/font-awesome/css/font-awesome.min.css") }}">
     <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/dist/css/AdminLTE.min.css") }}">
     <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/iCheck/square/blue.css") }}">
-    <link rel="stylesheet" href="{{ admin_asset('css/custom.css')}}">
+    <link rel="stylesheet" href="{{ admin_asset('asset/css/login.css')}}">
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 </head>
@@ -30,9 +31,9 @@
         <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
 
             @if($errors->has('username'))
-            @foreach($errors->get('username') as $message)
-                <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
-            @endforeach
+                @foreach($errors->get('username') as $message)
+                    <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
+                @endforeach
             @endif
 
             <input type="text" class="form-control" placeholder="{{ trans('admin.username') }}" name="username" value="{{ old('username') }}">
@@ -41,9 +42,9 @@
         <div class="form-group has-feedback {!! !$errors->has('password') ?: 'has-error' !!}">
 
             @if($errors->has('password'))
-            @foreach($errors->get('password') as $message)
-                <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
-            @endforeach
+                @foreach($errors->get('password') as $message)
+                    <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
+                @endforeach
             @endif
 
             <input type="password" class="form-control" placeholder="{{ trans('admin.password') }}" name="password">
@@ -53,18 +54,18 @@
         <div class="row">
             <div class="col-xs-6">
             @if(config('admin.auth.remember'))
-            <div class="checkbox icheck">
-                <label>
-                <input type="checkbox" name="remember" value="1" {{ (!old('username') || old('remember')) ? 'checked' : '' }}>
-                {{ trans('admin.remember_me') }}
-                </label>
-            </div>
+                <div class="checkbox icheck">
+                    <label>
+                    <input type="checkbox" name="remember" value="1" {{ (!old('username') || old('remember')) ? 'checked' : '' }}>
+                    {{ trans('admin.remember_me') }}
+                    </label>
+                </div>
             @endif
             </div>
             <!-- /.col -->
             <div class="col-xs-6">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <button type="submit" class="btn btn-danger btn-block btn-flat">{{ trans('admin.login') }}</button>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <button type="submit" class="btn btn-danger btn-block btn-flat">{{ trans('admin.login') }}</button>
             </div>
             <!-- /.col -->
         </div>
@@ -79,20 +80,19 @@
     </div>
 </div>
 
-<!-- jQuery 2.1.4 -->
 <script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js")}} "></script>
-<!-- Bootstrap 3.3.5 -->
 <script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/bootstrap/js/bootstrap.min.js")}}"></script>
-<!-- iCheck -->
 <script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/iCheck/icheck.min.js")}}"></script>
+
 <script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
     });
-  });
 </script>
+
 </body>
 </html>

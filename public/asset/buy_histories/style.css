@@ -1,0 +1,31 @@
+thead {
+    text-align: center;
+}
+thead .main-row-thead {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+thead td {
+    width: 100px;
+    vertical-align: middle;
+}
+.w100 {
+    width: 100px;
+}
+.w150 {
+    width: 150px;
+}
+.tx-center {
+    text-align: center;
+}
+input {
+    padding: 5px !important;
+    font-size: 12px !important;
+    text-align: right !important;
+}
+tbody td span {
+    line-height: 35px;
+}
+.float-right {
+    text-align: right;
+}
