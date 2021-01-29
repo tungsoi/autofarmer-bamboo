@@ -16,10 +16,10 @@ thead td {
     width: 150px;
 }
 .tx-center {
-    text-align: center;
+    text-align: center !important;
 }
 input {
-    padding: 5px !important;
+    padding: 4px !important;
     font-size: 12px !important;
     text-align: right !important;
 }
@@ -28,4 +28,14 @@ tbody td span {
 }
 .float-right {
     text-align: right;
+}
+.readonly-input{
+    background: white !important;
+    border: white !important;
+}
+.tx-left {
+    text-align: left !important;
+}
+.space-row {
+    background-color: #aaa;
 }

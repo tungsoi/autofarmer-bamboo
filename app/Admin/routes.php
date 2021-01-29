@@ -16,9 +16,12 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index')->name('home');
+    $router->post('/buy_histories/storeReq', 'BuyHistoryController@storeReq')->name('buy_histories.storeReq');
 
     $router->resources([
-        'buy_histories'   =>  'BuyHistoryController'
+        'buy_histories'   =>  'BuyHistoryController',
+        'debts'           =>  'DebtController',
+        'revenues'        =>  'RevenueController'
     ]);
 
 });

@@ -12,7 +12,7 @@ use Encore\Admin\Admin;
 use Encore\Admin\Facades\Admin as AdminUser;
 use Illuminate\Http\Request;
 
-class BuyHistoryController extends AdminController
+class RevenueController extends AdminController
 {
     /**
      * Title for current resource.
