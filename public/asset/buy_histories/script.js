@@ -1,4 +1,10 @@
 $( document ).ready(function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     // const element
     const SELF_AMOUNT = 'input[name="self_amount"]';
     const SELF_PRICE = 'input[name="self_price"]';
@@ -17,63 +23,84 @@ $( document ).ready(function() {
     const CLONE_TOTAL = 'input[name="clone_total"]';
 
     const TOTAL_MONEY = 'input[name="total_money"]';
+    const INPUT_TEXT = 'input[type="text"]';
 
     const BTN_EDIT = '.btn-edit-history';
     const BTN_DELETE = '.btn-delete-history';
 
+    function handle_amount(x, y, z) {
+        formatCurrency(x);
+        let rowKey = get_row_key(x);
+
+        func_handle_action_input(
+            x.val(), 
+            $('tr[data-key="'+rowKey+'"] '+y+'').val(), 
+            $('tr[data-key="'+rowKey+'"] '+z+'')
+        );
+        func_cal_total_money(rowKey);
+        
+        $.ajax({
+            url: '/admin/buy_histories/updateReq',
+            type: 'POST',
+            data: $("tr[data-key="+rowKey+"]").children('form').serialize(),
+            success: function (data) {
+                console.log('updated');
+            },
+            error: function (e) {
+                alert('error');
+            }
+        });
+    }
+    $(document).on('click', INPUT_TEXT, function () {
+        $(INPUT_TEXT).css('background', "white");
+        $(SELF_TOTAL).css('background', "#eee");
+        $(SPONSOR_TOTAL).css('background', "#eee");
+        $(SIM_TOTAL).css('background', "#eee");
+        $(CLONE_TOTAL).css('background', "#eee");
+        $(TOTAL_MONEY).css('background', "#eee");
+        $(this).css('background', "wheat");
+    });
+
     // self action
     $(document).on('keyup', SELF_AMOUNT, function () {
-        formatCurrency($(this));
-        func_handle_action_input($(this).val(), $(SELF_PRICE).val(), SELF_TOTAL);
-        func_cal_total_money();
+        handle_amount($(this), SELF_PRICE, SELF_TOTAL);
     });
 
     $(document).on('keyup', SELF_PRICE, function () {
-        formatCurrency($(this));
-        func_handle_action_input($(this).val(), $(SELF_AMOUNT).val(), SELF_TOTAL);
-        func_cal_total_money();
+        handle_amount($(this), SELF_AMOUNT, SELF_TOTAL);
     });
 
     // sponsor action
     $(document).on('keyup', SPONSOR_AMOUNT, function () {
-        formatCurrency($(this));
-        func_handle_action_input($(this).val(), $(SPONSOR_PRICE).val(), SPONSOR_TOTAL);
-        func_cal_total_money();
+        handle_amount($(this), SPONSOR_PRICE, SPONSOR_TOTAL);
     });
 
     $(document).on('keyup', SPONSOR_PRICE, function () {
-        formatCurrency($(this));
-        func_handle_action_input($(this).val(), $(SPONSOR_AMOUNT).val(), SPONSOR_TOTAL);
-        func_cal_total_money();
+        handle_amount($(this), SPONSOR_AMOUNT, SPONSOR_TOTAL);
     });
 
     // sim action
     $(document).on('keyup', SIM_AMOUNT, function () {
-        formatCurrency($(this));
-        func_handle_action_input($(this).val(), $(SIM_PRICE).val(), SIM_TOTAL);
-        func_cal_total_money();
+        handle_amount($(this), SIM_PRICE, SIM_TOTAL);
     });
 
     $(document).on('keyup', SIM_PRICE, function () {
-        formatCurrency($(this));
-        func_handle_action_input($(this).val(), $(SIM_AMOUNT).val(), SIM_TOTAL);
-        func_cal_total_money();
+        handle_amount($(this), SIM_AMOUNT, SIM_TOTAL);
     });
 
     // clone action
     $(document).on('keyup', CLONE_AMOUNT, function () {
-        formatCurrency($(this));
-        func_handle_action_input($(this).val(), $(CLONE_PRICE).val(), CLONE_TOTAL);
-        func_cal_total_money();
+        handle_amount($(this), CLONE_PRICE, CLONE_TOTAL);
     });
 
     $(document).on('keyup', CLONE_PRICE, function () {
-        formatCurrency($(this));
-        func_handle_action_input($(this).val(), $(CLONE_AMOUNT).val(), CLONE_TOTAL);
-        func_cal_total_money();
+        handle_amount($(this), CLONE_AMOUNT, CLONE_TOTAL);
     });
 
     // Common support
+    function get_row_key(el) {
+        return el.closest('tr').data('key');
+    }
     function func_handle_action_input(x, y, z) {
         let multiply = func_self_total(
             func_get_ele_int_value(x), 
@@ -82,14 +109,14 @@ $( document ).ready(function() {
         func_set_ele_value(z, convertStringToCurrency(multiply));
     }
 
-    function func_cal_total_money() {
-        let self_total = convertCurrencyToNumber($(SELF_TOTAL).val());
-        let sponsor_total = convertCurrencyToNumber($(SPONSOR_TOTAL).val());
-        let sim_total = convertCurrencyToNumber($(SIM_TOTAL).val());
-        let clone_total = convertCurrencyToNumber($(CLONE_TOTAL).val());
+    function func_cal_total_money(rowKey) {
+        let self_total = convertCurrencyToNumber($('tr[data-key="'+rowKey+'"] '+SELF_TOTAL+'').val());
+        let sponsor_total = convertCurrencyToNumber($('tr[data-key="'+rowKey+'"] '+SPONSOR_TOTAL+'').val());
+        let sim_total = convertCurrencyToNumber($('tr[data-key="'+rowKey+'"] '+SIM_TOTAL+'').val());
+        let clone_total = convertCurrencyToNumber($('tr[data-key="'+rowKey+'"] '+CLONE_TOTAL+'').val());
 
         let total_money = self_total + sponsor_total + sim_total + clone_total;
-        func_set_ele_value(TOTAL_MONEY, convertStringToCurrency(total_money));
+        func_set_ele_value($('tr[data-key="'+rowKey+'"] '+TOTAL_MONEY+''), convertStringToCurrency(total_money));
     }
 
     function func_self_total(self_amount, self_price) {
@@ -197,28 +224,4 @@ $( document ).ready(function() {
         caret_pos = updated_len - original_len + caret_pos;
         input[0].setSelectionRange(caret_pos, caret_pos);
     }
-
-    // handle action row
-    $(document).on('click', BTN_EDIT, function () {
-        console.log('begin edit');
-    });
-
-    
-    $(document).on('click', BTN_DELETE, function () {
-        console.log('begin delete');
-
-        if (confirm('Xóa lịch sử ?')) {
-            $.ajax({
-                type: "DELETE",
-                url: '/buy_histories/'+$(this).data('key'),
-                data: null,
-                success: function (response) {
-                    console.log(response);
-                }
-            });
-        }
-        else {
-            window.location.reload();
-        }
-    });
 });

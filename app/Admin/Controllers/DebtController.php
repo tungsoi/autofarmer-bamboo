@@ -30,11 +30,15 @@ class DebtController extends AdminController
     {
         $grid = new Grid(new BuyHistory);
         $grid->model()->whereUserId(AdminUser::user()->id);
-
-        $grid->id();
+        $grid->rows(function (Grid\Row $row) {
+            $row->column('number', ($row->number+1));
+        });
+        $grid->column('number', 'STT');
         $grid->time('Thời gian');
         $grid->sponsor_total('Công nợ')->display(function () {
             return number_format($this->sponsor_total);
+        })->totalRow(function ($amount) {
+            return "<span class='label label-success'>".number_format($amount)."</span>";
         });
         $grid->column('created_at', 'Ngày tạo');
         $grid->disableActions();

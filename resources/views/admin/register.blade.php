@@ -25,14 +25,9 @@
         <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}}</b></a>
     </div>
     <div class="login-box-body">
-        <p class="login-box-msg">{{ trans('admin.login') }}</p>
-        @if (session()->has('register'))
-        <div class="alert alert-success">
-            {{ session()->get('register') }}
-        </div>
-        @endif
+        <p class="login-box-msg">{{ trans('admin.register') }}</p>
         <br>
-        <form action="{{ admin_url('auth/login') }}" method="post">
+        <form action="{{ admin_url('auth/register') }}" method="post">
         <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
 
             @if($errors->has('username'))
@@ -44,40 +39,22 @@
             <input type="text" class="form-control" placeholder="{{ trans('admin.username') }}" name="username" value="{{ old('username') }}">
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
-        <div class="form-group has-feedback {!! !$errors->has('password') ?: 'has-error' !!}">
-
-            @if($errors->has('password'))
-                @foreach($errors->get('password') as $message)
-                    <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
-                @endforeach
-            @endif
-
-            <input type="password" class="form-control" placeholder="{{ trans('admin.password') }}" name="password">
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-        </div>
-        <br><br>
+        
         <div class="row">
-            <div class="col-xs-6">
-            @if(config('admin.auth.remember'))
-                <div class="checkbox icheck">
-                    <label>
-                    <input type="checkbox" name="remember" value="1" {{ (!old('username') || old('remember')) ? 'checked' : '' }}>
-                    {{ trans('admin.remember_me') }}
-                    </label>
-                </div>
-            @endif
+            <div class="col-xs-3">
+           
             </div>
             <!-- /.col -->
             <div class="col-xs-6">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <button type="submit" class="btn btn-danger btn-block btn-flat">{{ trans('admin.login') }}</button>
+                <button type="submit" class="btn btn-danger btn-block btn-flat">{{ trans('admin.register') }}</button>
             </div>
             <!-- /.col -->
         </div>
         <br>
         <div class="row">
             <div class="col-xs-12">
-                <h5 class="pull-right">Chưa có tài khoản? <a href="{{ route('admin.register') }}" class="">Đăng ký</a></h5>
+                <h5 class="pull-right">Đã có tài khoản? <a href="{{ route('admin.login') }}" class="">Đăng nhập</a></h5>
             </div>
         </div>
         </form>

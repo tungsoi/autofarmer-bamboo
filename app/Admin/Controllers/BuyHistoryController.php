@@ -84,4 +84,19 @@ class BuyHistoryController extends AdminController
             'id'    =>  $id
         ]);
     }
+
+    public function updateReq(Request $req) {
+        $data = $req->all();
+        unset($data['_token']);
+
+        foreach ($data as $key => $value) {
+            $data[$key] = str_replace(",", "", $value);
+        }
+
+        BuyHistory::find($data['id'])->update($data);
+
+        return response()->json([
+            'message'   =>  true
+        ]);
+    }
 }

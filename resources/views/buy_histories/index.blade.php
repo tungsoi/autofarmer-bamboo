@@ -1,10 +1,9 @@
-<table class="table table-bordered">
+<table class="table table-bordered" id="tbl_buy_histories">
     @include('buy_histories.thead')
 
     <tbody>
         @include('buy_histories.records', [
             'records'   =>  $records
         ])
-        @include('buy_histories.row_default')
     </tbody>
 </table>

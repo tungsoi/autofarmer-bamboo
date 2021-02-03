@@ -18,6 +18,28 @@
     <script src="{{ Admin::jQuery() }}"></script>
     {!! Admin::headerJs() !!}
 
+    <style>
+        #tbl_buy_histories td, #tbl_buy_histories th, #tbl_buy_histories {
+            border-color: gray !important;
+        }
+        #tbl_buy_histories tbody td {
+            padding: 1px;
+        }
+        #tbl_buy_histories input {
+            border: 1px solid white !important;
+        }
+        #tbl_buy_histories .btn-success {
+            margin-top: 7px !important;
+            background-color: white;
+            border-color: white;
+            color: #008d4c;
+        }
+        #tbl_buy_histories .btn-success:hover {
+            background-color: #008d4c;
+            border-color: #008d4c;
+            color: white;
+        }
+    </style>
 </head>
 
 <body class="hold-transition {{config('admin.skin')}} {{join(' ', config('admin.layout'))}}">

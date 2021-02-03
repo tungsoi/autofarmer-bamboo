@@ -17,11 +17,24 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
     $router->post('/buy_histories/storeReq', 'BuyHistoryController@storeReq')->name('buy_histories.storeReq');
+    $router->post('/buy_histories/updateReq', 'BuyHistoryController@updateReq')->name('buy_histories.updateReq');
 
     $router->resources([
         'buy_histories'   =>  'BuyHistoryController',
         'debts'           =>  'DebtController',
-        'revenues'        =>  'RevenueController'
+        'revenues'        =>  'RevenueController',
+        'clones'          =>  'CloneController',
+        'devices'         =>  'DeviceController'
     ]);
 
+});
+
+Route::group([
+    'prefix'        =>  config('admin.route.prefix'),
+    'namespace'     =>  config('admin.route.namespace'),
+    'as'            =>  config('admin.route.prefix') . '.',
+    'middleware'    => ['web']
+], function (Router $router) {
+    $router->get('/auth/register', 'AuthController@getRegister')->name('register');
+    $router->post('/auth/register', 'AuthController@postRegister')->name('register');
 });

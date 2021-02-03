@@ -18,9 +18,6 @@
         <td rowspan="2"  class="w150">
             Thành tiền
         </td>
-        <td rowspan="2">
-            Action
-        </td>
     </tr>
     <tr class="scd-row-thead">
         <td>
